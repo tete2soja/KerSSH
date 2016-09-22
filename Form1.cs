@@ -26,7 +26,7 @@ namespace KerSSH
             string domain = Domain.GetComputerDomain().Name;
             string dns = "CICNTP12";
             PowerShell powerShell = PowerShell.Create();
-            string script = "(Get-DnsServerResourceRecord -ZoneName " + domain + " -RRType A -ComputerName " + dns + " | Where-Object {$_.HostName -like \"disbian*\"}).HostName";
+            string script = "(Get-DnsServerResourceRecord -ZoneName " + domain + " -RRType A -ComputerName " + dns + " | Where-Object {$_.HostName -like \"*" + pattern.Text + "*\"}).HostName";
             powerShell.AddScript(script);
             var results = powerShell.Invoke();
 
@@ -48,6 +48,15 @@ namespace KerSSH
             ssh.Connect();
             Console.WriteLine(ssh.RunCommand(textBox1.Text).Result);
             ssh.Disconnect();
+        }
+
+        private void pattern_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13)
+            {
+                Console.WriteLine("ENTRE");
+                button1.PerformClick();
+            }
         }
     }
 }
