@@ -32,7 +32,7 @@ namespace KerSSH
 
             foreach (var item in results)
             {
-                listView1.Items.Add(item.ToString());
+                checkedListBox1.Items.Add(item.ToString());
             }
 
             if (powerShell.Streams.Error.Count > 0)
@@ -46,7 +46,52 @@ namespace KerSSH
 
             SshClient ssh = new SshClient(server, username, password);
             ssh.Connect();
-            Console.WriteLine(ssh.RunCommand(textBox1.Text).Result);
+            //Console.WriteLine(ssh.RunCommand(textBox1.Text).Result);
+            //ssh.Disconnect();
+            var steam = ssh.CreateShellStream("term", 80, 24, 800, 600, 1024);
+            var reader = new System.IO.StreamReader(steam);
+            var writer = new System.IO.StreamWriter(steam);
+            writer.AutoFlush = true;
+            while (steam.Length == 0)
+            {
+                System.Threading.Thread.Sleep(500);
+            }
+            var line = reader.ReadLine();
+            while (line != null)
+            {
+                Console.WriteLine(line);
+                line = reader.ReadLine();
+            }
+
+            if (rootaccess.Checked)
+            {
+                writer.WriteLine("su -");
+                while (steam.Length == 0)
+                {
+                    System.Threading.Thread.Sleep(500);
+                }
+
+                line = reader.ReadLine();
+                while (line != null)
+                {
+                    Console.WriteLine(line);
+                    line = reader.ReadLine();
+                }
+
+                writer.WriteLine("");
+                while (steam.Length == 0)
+                {
+                    System.Threading.Thread.Sleep(500);
+                }
+
+                line = reader.ReadLine();
+                while (line != null)
+                {
+                    Console.WriteLine(line);
+                    line = reader.ReadLine();
+                }
+            }
+
             ssh.Disconnect();
         }
 
