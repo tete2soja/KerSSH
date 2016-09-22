@@ -23,6 +23,10 @@ namespace KerSSH
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
+
+            checkedListBox1.Items.Clear();
+
             string domain = Domain.GetComputerDomain().Name;
             string dns = "CICNTP12";
             PowerShell powerShell = PowerShell.Create();
@@ -40,59 +44,7 @@ namespace KerSSH
                 Console.WriteLine("{0} errors", powerShell.Streams.Error.Count);
             }
 
-            string server = "";
-            string username = "";
-            string password = "";
-
-            SshClient ssh = new SshClient(server, username, password);
-            ssh.Connect();
-            //Console.WriteLine(ssh.RunCommand(textBox1.Text).Result);
-            //ssh.Disconnect();
-            var steam = ssh.CreateShellStream("term", 80, 24, 800, 600, 1024);
-            var reader = new System.IO.StreamReader(steam);
-            var writer = new System.IO.StreamWriter(steam);
-            writer.AutoFlush = true;
-            while (steam.Length == 0)
-            {
-                System.Threading.Thread.Sleep(500);
-            }
-            var line = reader.ReadLine();
-            while (line != null)
-            {
-                Console.WriteLine(line);
-                line = reader.ReadLine();
-            }
-
-            if (rootaccess.Checked)
-            {
-                writer.WriteLine("su -");
-                while (steam.Length == 0)
-                {
-                    System.Threading.Thread.Sleep(500);
-                }
-
-                line = reader.ReadLine();
-                while (line != null)
-                {
-                    Console.WriteLine(line);
-                    line = reader.ReadLine();
-                }
-
-                writer.WriteLine("");
-                while (steam.Length == 0)
-                {
-                    System.Threading.Thread.Sleep(500);
-                }
-
-                line = reader.ReadLine();
-                while (line != null)
-                {
-                    Console.WriteLine(line);
-                    line = reader.ReadLine();
-                }
-            }
-
-            ssh.Disconnect();
+            Cursor.Current = Cursors.Default;
         }
 
         private void pattern_KeyDown(object sender, KeyEventArgs e)
@@ -101,6 +53,64 @@ namespace KerSSH
             {
                 Console.WriteLine("ENTRE");
                 button1.PerformClick();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            foreach (var item in checkedListBox1.CheckedItems)
+            {
+
+                string user = username.Text;
+                string pass = password.Text;
+
+                SshClient ssh = new SshClient(item.ToString(), user, pass);
+                ssh.Connect();
+                var steam = ssh.CreateShellStream("term", 80, 24, 800, 600, 1024);
+                var reader = new System.IO.StreamReader(steam);
+                var writer = new System.IO.StreamWriter(steam);
+                writer.AutoFlush = true;
+                while (steam.Length == 0)
+                {
+                    System.Threading.Thread.Sleep(500);
+                }
+                var line = reader.ReadLine();
+                while (line != null)
+                {
+                    Console.WriteLine(line);
+                    line = reader.ReadLine();
+                }
+
+                if (rootaccess.Checked)
+                {
+                    writer.WriteLine("su -");
+                    while (steam.Length == 0)
+                    {
+                        System.Threading.Thread.Sleep(500);
+                    }
+
+                    line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        Console.WriteLine(line);
+                        line = reader.ReadLine();
+                    }
+                }
+
+                writer.WriteLine(textBox1.Text);
+                while (steam.Length == 0)
+                {
+                    System.Threading.Thread.Sleep(500);
+                }
+
+                line = reader.ReadLine();
+                while (line != null)
+                {
+                    Console.WriteLine(line);
+                    line = reader.ReadLine();
+                }
+
+                ssh.Disconnect();
             }
         }
     }
