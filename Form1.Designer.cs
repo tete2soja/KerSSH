@@ -38,6 +38,7 @@
             this.username = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.password = new System.Windows.Forms.TextBox();
+            this.rootpassword = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -45,7 +46,7 @@
             this.textBox1.Location = new System.Drawing.Point(212, 39);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(394, 323);
+            this.textBox1.Size = new System.Drawing.Size(417, 323);
             this.textBox1.TabIndex = 1;
             // 
             // button1
@@ -128,11 +129,19 @@
             this.password.Size = new System.Drawing.Size(100, 20);
             this.password.TabIndex = 10;
             // 
+            // rootpassword
+            // 
+            this.rootpassword.Location = new System.Drawing.Point(493, 383);
+            this.rootpassword.Name = "rootpassword";
+            this.rootpassword.Size = new System.Drawing.Size(136, 20);
+            this.rootpassword.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(618, 425);
+            this.ClientSize = new System.Drawing.Size(641, 425);
+            this.Controls.Add(this.rootpassword);
             this.Controls.Add(this.password);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.username);
@@ -162,6 +171,7 @@
         private System.Windows.Forms.TextBox username;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox password;
+        private System.Windows.Forms.TextBox rootpassword;
     }
 }
 

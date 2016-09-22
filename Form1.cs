@@ -95,6 +95,19 @@ namespace KerSSH
                         Console.WriteLine(line);
                         line = reader.ReadLine();
                     }
+
+                    writer.WriteLine(rootpassword.Text);
+                    while (steam.Length == 0)
+                    {
+                        System.Threading.Thread.Sleep(500);
+                    }
+
+                    line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        Console.WriteLine(line);
+                        line = reader.ReadLine();
+                    }
                 }
 
                 writer.WriteLine(textBox1.Text);
