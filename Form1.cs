@@ -117,6 +117,7 @@ namespace KerSSH
                 while (line != null)
                 {
                     Console.WriteLine(line);
+                    System.Threading.Thread.Sleep(250);
                     line = reader.ReadLine();
                 }
 
