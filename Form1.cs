@@ -67,6 +67,7 @@ namespace KerSSH
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             foreach (var item in listView1.CheckedItems)
             {
 
@@ -135,6 +136,7 @@ namespace KerSSH
 
                 ssh.Disconnect();
             }
+            Cursor.Current = Cursors.Default;
         }
     }
 }
