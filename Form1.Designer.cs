@@ -34,12 +34,12 @@
             this.button2 = new System.Windows.Forms.Button();
             this.pattern = new System.Windows.Forms.TextBox();
             this.rootaccess = new System.Windows.Forms.CheckBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.username = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.password = new System.Windows.Forms.TextBox();
             this.rootpassword = new System.Windows.Forms.TextBox();
+            this.listView1 = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // textBox1
@@ -89,14 +89,6 @@
             this.rootaccess.Text = "Root access";
             this.rootaccess.UseVisualStyleBackColor = true;
             // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(12, 69);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(194, 349);
-            this.checkedListBox1.TabIndex = 6;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -137,17 +129,27 @@
             this.rootpassword.Size = new System.Drawing.Size(136, 20);
             this.rootpassword.TabIndex = 11;
             // 
+            // listView1
+            // 
+            this.listView1.Location = new System.Drawing.Point(13, 68);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(191, 344);
+            this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.listView1.TabIndex = 12;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.List;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(641, 425);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.rootpassword);
             this.Controls.Add(this.password);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.username);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.rootaccess);
             this.Controls.Add(this.pattern);
             this.Controls.Add(this.button2);
@@ -168,12 +170,12 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox pattern;
         private System.Windows.Forms.CheckBox rootaccess;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox username;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox password;
         private System.Windows.Forms.TextBox rootpassword;
+        private System.Windows.Forms.ListView listView1;
     }
 }
 

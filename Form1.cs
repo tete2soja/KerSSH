@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Management.Automation;
 using System.DirectoryServices.ActiveDirectory;
 using Renci.SshNet;
+using System.Net.NetworkInformation;
 
 namespace KerSSH
 {
@@ -11,6 +12,7 @@ namespace KerSSH
         public Form1()
         {
             InitializeComponent();
+            listView1.CheckBoxes = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -22,7 +24,7 @@ namespace KerSSH
         {
             Cursor.Current = Cursors.WaitCursor;
 
-            checkedListBox1.Items.Clear();
+            listView1.Clear();
 
             string domain = Domain.GetComputerDomain().Name;
             string dns = "CICNTP12";
@@ -33,7 +35,17 @@ namespace KerSSH
 
             foreach (var item in results)
             {
-                checkedListBox1.Items.Add(item.ToString());
+                Ping myPing = new Ping();
+                PingReply reply = myPing.Send(item.ToString(), 1000);
+                var tmp = listView1.Items.Add(item.ToString());
+                if (reply.Status == IPStatus.Success)
+                {
+                    tmp.ForeColor = System.Drawing.Color.Green;
+                }
+                else
+                {
+                    tmp.ForeColor = System.Drawing.Color.Red;
+                }
             }
 
             if (powerShell.Streams.Error.Count > 0)
@@ -55,7 +67,7 @@ namespace KerSSH
 
         private void button2_Click(object sender, EventArgs e)
         {
-            foreach (var item in checkedListBox1.CheckedItems)
+            foreach (var item in listView1.CheckedItems)
             {
 
                 string user = username.Text;
