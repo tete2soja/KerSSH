@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 using System.Management.Automation;
-using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
-using System.Net;
 using Renci.SshNet;
 
 namespace KerSSH
