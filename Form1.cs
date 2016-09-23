@@ -68,13 +68,16 @@ namespace KerSSH
         private void button2_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            foreach (var item in listView1.CheckedItems)
+            Form2 form2 = new Form2();
+            form2.Show();
+            TextBox log = form2.getTextBox();
+            foreach (ListViewItem item in listView1.CheckedItems)
             {
 
                 string user = username.Text;
                 string pass = password.Text;
 
-                SshClient ssh = new SshClient(item.ToString(), user, pass);
+                SshClient ssh = new SshClient(item.Text, user, pass);
                 ssh.Connect();
                 var steam = ssh.CreateShellStream("term", 80, 24, 800, 600, 1024);
                 var reader = new System.IO.StreamReader(steam);
@@ -129,6 +132,7 @@ namespace KerSSH
                 line = reader.ReadLine();
                 while (line != null)
                 {
+                    form2.setText(line);
                     Console.WriteLine(line);
                     System.Threading.Thread.Sleep(250);
                     line = reader.ReadLine();
