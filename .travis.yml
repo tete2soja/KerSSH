@@ -1,0 +1,12 @@
+language: csharp
+solution: KerSSH.sln
+install:
+  - sudo apt-get install -y gtk-sharp2
+  - nuget restore KerSSH.sln
+addons:
+  sonarqube: true
+env:
+  global:
+    secure: XcC+mTCShRpgTjB+q4RIDsNwfS70hkeGz4PSovfAqsTNS1lnFF/kiPJoOM644o4/+krhxzrHccm+XiWyKF3IhKby2K6sDPxW3dQJagsYZgNflJtkgxyAXImHg9OfuXPuvvaPrJ36SuznJaQNnasUzOX7rA0HirwHEz7A4O4058rGG0+VwCH7dnkBgHay4JvpXoOveYpDJxO6gC2iYPRcalyJmQfZOeS2Mx/CLF7s8S7lKRdXqlp3GglT5eZWNN+awM7onpRIIFOw+6ATqPTALdOu184f2jOwfrWa1YzynjapRnxyOk+xMBlan3weKuo8NeXRG1TWqzBbVEfIzjpk9tyFQCBURXEdfJ4H1WR7oyaPJEV1hVAAX+2u/maN5cF982FUmIkMP/NbHxkoEn3gPtemnL9rRRt/O/7nPapfD5GRhktPA06ym0MskBSPNRH8/GRa9JpcCrzoTxyF4bkmr9w/l7tH94xtJ4r6neJgWzl+pGqIXo7ZmeXVoVctTkTcZG65P1a4FXaFoVU5Y3w2FtMFpmPSjQz5td6w58RuwEyS58xLvMHozFjaFK3hDb9c29RaWiUE6+EsUtiMZo+tXb1ZvNjvm9nKChDnY9v0qF0hJ+ENHoFfenyTCRHcFkA4ERg/9iaAQX6ngqwXex+AaVz3WpItbseZXBZX4QCVMyY=
+script:
+- sonar-scanner -Dsonar.login=$SONAR_TOKEN
