@@ -37,7 +37,7 @@
             this.log.Location = new System.Drawing.Point(13, 13);
             this.log.Multiline = true;
             this.log.Name = "log";
-            this.log.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.log.Size = new System.Drawing.Size(497, 292);
             this.log.TabIndex = 0;
             // 

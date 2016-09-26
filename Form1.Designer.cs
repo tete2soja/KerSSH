@@ -118,9 +118,9 @@
             // 
             this.password.Location = new System.Drawing.Point(475, 13);
             this.password.Name = "password";
-            this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(100, 20);
             this.password.TabIndex = 4;
+            this.password.UseSystemPasswordChar = true;
             // 
             // rootpassword
             // 
@@ -128,6 +128,7 @@
             this.rootpassword.Name = "rootpassword";
             this.rootpassword.Size = new System.Drawing.Size(136, 20);
             this.rootpassword.TabIndex = 7;
+            this.rootpassword.UseSystemPasswordChar = true;
             // 
             // listView1
             // 
@@ -158,7 +159,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "KerSSH";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -15,11 +15,6 @@ namespace KerSSH
             listView1.CheckBoxes = true;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
@@ -60,7 +55,6 @@ namespace KerSSH
         {
             if (e.KeyValue == 13)
             {
-                Console.WriteLine("ENTRE");
                 button1.PerformClick();
             }
         }
@@ -133,7 +127,6 @@ namespace KerSSH
                 while (line != null)
                 {
                     form2.setText(line);
-                    Console.WriteLine(line);
                     System.Threading.Thread.Sleep(250);
                     line = reader.ReadLine();
                 }
