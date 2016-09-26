@@ -40,6 +40,7 @@
             this.password = new System.Windows.Forms.TextBox();
             this.rootpassword = new System.Windows.Forms.TextBox();
             this.listView1 = new System.Windows.Forms.ListView();
+            this.count = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -139,12 +140,23 @@
             this.listView1.TabIndex = 12;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
+            this.listView1.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listView1_ItemChecked);
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // count
+            // 
+            this.count.AutoSize = true;
+            this.count.Location = new System.Drawing.Point(594, 16);
+            this.count.Name = "count";
+            this.count.Size = new System.Drawing.Size(0, 13);
+            this.count.TabIndex = 13;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(641, 425);
+            this.Controls.Add(this.count);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.rootpassword);
             this.Controls.Add(this.password);
@@ -176,6 +188,7 @@
         private System.Windows.Forms.TextBox password;
         private System.Windows.Forms.TextBox rootpassword;
         private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Label count;
     }
 }
 

@@ -140,5 +140,10 @@ namespace KerSSH
             }
             Cursor.Current = Cursors.Default;
         }
+
+        private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            this.count.Text = listView1.CheckedItems.Count + "/" + listView1.Items.Count;
+        }
     }
 }
