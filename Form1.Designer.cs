@@ -48,7 +48,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(417, 323);
-            this.textBox1.TabIndex = 1;
+            this.textBox1.TabIndex = 5;
             // 
             // button1
             // 
@@ -66,7 +66,7 @@
             this.button2.Location = new System.Drawing.Point(212, 368);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(183, 44);
-            this.button2.TabIndex = 3;
+            this.button2.TabIndex = 8;
             this.button2.Text = "Lancer le script";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -76,7 +76,7 @@
             this.pattern.Location = new System.Drawing.Point(13, 13);
             this.pattern.Name = "pattern";
             this.pattern.Size = new System.Drawing.Size(191, 20);
-            this.pattern.TabIndex = 4;
+            this.pattern.TabIndex = 1;
             this.pattern.KeyDown += new System.Windows.Forms.KeyEventHandler(this.pattern_KeyDown);
             // 
             // rootaccess
@@ -85,7 +85,7 @@
             this.rootaccess.Location = new System.Drawing.Point(401, 385);
             this.rootaccess.Name = "rootaccess";
             this.rootaccess.Size = new System.Drawing.Size(86, 17);
-            this.rootaccess.TabIndex = 5;
+            this.rootaccess.TabIndex = 6;
             this.rootaccess.Text = "Root access";
             this.rootaccess.UseVisualStyleBackColor = true;
             // 
@@ -103,7 +103,7 @@
             this.username.Location = new System.Drawing.Point(278, 13);
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(100, 20);
-            this.username.TabIndex = 8;
+            this.username.TabIndex = 3;
             // 
             // label2
             // 
@@ -120,14 +120,14 @@
             this.password.Name = "password";
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(100, 20);
-            this.password.TabIndex = 10;
+            this.password.TabIndex = 4;
             // 
             // rootpassword
             // 
             this.rootpassword.Location = new System.Drawing.Point(493, 383);
             this.rootpassword.Name = "rootpassword";
             this.rootpassword.Size = new System.Drawing.Size(136, 20);
-            this.rootpassword.TabIndex = 11;
+            this.rootpassword.TabIndex = 7;
             // 
             // listView1
             // 
