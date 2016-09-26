@@ -5,6 +5,7 @@ using System.DirectoryServices.ActiveDirectory;
 using Renci.SshNet;
 using System.Net.NetworkInformation;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace KerSSH
 {
@@ -27,13 +28,13 @@ namespace KerSSH
             PowerShell powerShell = PowerShell.Create();
             string script = "(Get-DnsServerResourceRecord -ZoneName " + domain + " -RRType A -ComputerName " + dns + " | Where-Object {$_.HostName -like \"*" + pattern.Text + "*\"}).HostName";
             powerShell.AddScript(script);
-            var results = powerShell.Invoke();
+            Collection<PSObject> results = powerShell.Invoke();
 
             foreach (var item in results)
             {
                 Ping myPing = new Ping();
                 PingReply reply = myPing.Send(item.ToString(), 100);
-                var tmp = listView1.Items.Add(item.ToString());
+                ListViewItem tmp = listView1.Items.Add(item.ToString());
                 if (reply.Status == IPStatus.Success)
                 {
                     tmp.ForeColor = System.Drawing.Color.Green;
@@ -96,7 +97,7 @@ namespace KerSSH
                         {
                             System.Threading.Thread.Sleep(500);
                         }
-                        var line = reader.ReadLine();
+                        string line = reader.ReadLine();
                         while (line != null)
                         {
                             line = reader.ReadLine();
