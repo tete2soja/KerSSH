@@ -4,6 +4,7 @@ using System.Management.Automation;
 using System.DirectoryServices.ActiveDirectory;
 using Renci.SshNet;
 using System.Net.NetworkInformation;
+using System.IO;
 
 namespace KerSSH
 {
@@ -53,6 +54,7 @@ namespace KerSSH
 
         private void pattern_KeyDown(object sender, KeyEventArgs e)
         {
+            // Permet d'utiliser la touche "ENTREE"
             if (e.KeyValue == 13)
             {
                 button1.PerformClick();
@@ -63,82 +65,118 @@ namespace KerSSH
         {
             int i = 0;
             Cursor.Current = Cursors.WaitCursor;
-            Form2 form2 = new Form2();
-            form2.Show();
-            TextBox log = form2.getTextBox();
-            foreach (ListViewItem item in listView1.CheckedItems)
+
+            if ((username.Text == "") || (password.Text == ""))
             {
-                i++;
+                MessageBox.Show("Vous devez renseigner les champs utilisateur et mot de passe", "Erreur",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            }
+            else
+            {
+                Form2 form2 = new Form2();
+                form2.Show();
+                TextBox log = form2.getTextBox();
                 string user = username.Text;
                 string pass = password.Text;
-
-                SshClient ssh = new SshClient(item.Text, user, pass);
-                ssh.Connect();
-                var steam = ssh.CreateShellStream("term", 80, 24, 800, 600, 1024);
-                var reader = new System.IO.StreamReader(steam);
-                var writer = new System.IO.StreamWriter(steam);
-                writer.AutoFlush = true;
-                while (steam.Length == 0)
+                // Pour chaque item choisi dans la liste
+                foreach (ListViewItem item in listView1.CheckedItems)
                 {
-                    System.Threading.Thread.Sleep(500);
-                }
-                var line = reader.ReadLine();
-                while (line != null)
-                {
-                    Console.WriteLine(line);
-                    line = reader.ReadLine();
-                }
-
-                if (rootaccess.Checked)
-                {
-                    writer.WriteLine("su -");
-                    while (steam.Length == 0)
+                    try
                     {
-                        System.Threading.Thread.Sleep(500);
-                    }
+                        // Création de la connexion SSH
+                        SshClient ssh = new SshClient(item.Text, user, pass);
+                        ssh.Connect();
+                        // Création des flux du terminal
+                        ShellStream steam = ssh.CreateShellStream("term", 80, 24, 800, 600, 1024);
+                        StreamReader reader = new StreamReader(steam);
+                        StreamWriter writer = new StreamWriter(steam);
+                        writer.AutoFlush = true;
 
-                    line = reader.ReadLine();
-                    while (line != null)
-                    {
-                        Console.WriteLine(line);
+                        while (steam.Length == 0)
+                        {
+                            System.Threading.Thread.Sleep(500);
+                        }
+                        var line = reader.ReadLine();
+                        while (line != null)
+                        {
+                            line = reader.ReadLine();
+                        }
+
+                        // Active le root si la case est cochée
+                        if (rootaccess.Checked)
+                        {
+                            writer.WriteLine("su -");
+                            while (steam.Length == 0)
+                            {
+                                System.Threading.Thread.Sleep(500);
+                            }
+
+                            line = reader.ReadLine();
+                            while (line != null)
+                            {
+                                line = reader.ReadLine();
+                            }
+
+                            writer.WriteLine(rootpassword.Text);
+                            while (steam.Length == 0)
+                            {
+                                System.Threading.Thread.Sleep(500);
+                            }
+
+                            line = reader.ReadLine();
+                            while (line != null)
+                            {
+                                line = reader.ReadLine();
+                            }
+                        }
+
+                        writer.WriteLine(textBox1.Text);
+                        while (steam.Length == 0)
+                        {
+                            System.Threading.Thread.Sleep(500);
+                        }
+
                         line = reader.ReadLine();
-                    }
+                        while (line != null)
+                        {
+                            form2.setText(line);
+                            System.Threading.Thread.Sleep(250);
+                            line = reader.ReadLine();
+                        }
 
-                    writer.WriteLine(rootpassword.Text);
-                    while (steam.Length == 0)
+                        // Ferme la connexion SSH
+                        ssh.Disconnect();
+                    }
+                    catch (Renci.SshNet.Common.SshAuthenticationException)
                     {
-                        System.Threading.Thread.Sleep(500);
+                        // Identifiants invalides
+                        MessageBox.Show("Les identifiants fournis sont invalides", "Erreur de connexion",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
                     }
-
-                    line = reader.ReadLine();
-                    while (line != null)
+                    catch (System.Net.Sockets.SocketException)
                     {
-                        Console.WriteLine(line);
-                        line = reader.ReadLine();
+                        // Connexion impossible
+                        MessageBox.Show("L'ordinateur " + item.Text + " présente un problème réseau", "Erreur de connexion",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
                     }
+                    catch (InvalidOperationException)
+                    {
+                        // Connexion déjà établie
+                        MessageBox.Show("La connexion est déjà établie", "Erreur de connexion",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                    }
+                    finally
+                    {
+                        i++;
+                        // Mise à jour de la barre de progression
+                        int progression;
+                        progression = (int)(((decimal)i / (decimal)listView1.CheckedItems.Count) * 100);
+                        form2.setProgress(progression);
+                    }
+
                 }
-
-                writer.WriteLine(textBox1.Text);
-                while (steam.Length == 0)
-                {
-                    System.Threading.Thread.Sleep(500);
-                }
-
-                line = reader.ReadLine();
-                while (line != null)
-                {
-                    form2.setText(line);
-                    System.Threading.Thread.Sleep(250);
-                    line = reader.ReadLine();
-                }
-
-                ssh.Disconnect();
-                int progression;
-                progression = (int)(((decimal)i / (decimal)listView1.CheckedItems.Count) * 100);
-                form2.setProgress(progression);
-
+                Cursor.Current = Cursors.Default;
             }
-            Cursor.Current = Cursors.Default;
         }
 
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
