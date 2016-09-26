@@ -19,5 +19,10 @@ namespace KerSSH
             log.AppendText(text + "\r\n");
             log.Refresh();
         }
+
+        public void setProgress(int value)
+        {
+            this.progressBar1.Value = value;
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace KerSSH
             foreach (var item in results)
             {
                 Ping myPing = new Ping();
-                PingReply reply = myPing.Send(item.ToString(), 1000);
+                PingReply reply = myPing.Send(item.ToString(), 100);
                 var tmp = listView1.Items.Add(item.ToString());
                 if (reply.Status == IPStatus.Success)
                 {
@@ -61,13 +61,14 @@ namespace KerSSH
 
         private void button2_Click(object sender, EventArgs e)
         {
+            int i = 0;
             Cursor.Current = Cursors.WaitCursor;
             Form2 form2 = new Form2();
             form2.Show();
             TextBox log = form2.getTextBox();
             foreach (ListViewItem item in listView1.CheckedItems)
             {
-
+                i++;
                 string user = username.Text;
                 string pass = password.Text;
 
@@ -132,6 +133,10 @@ namespace KerSSH
                 }
 
                 ssh.Disconnect();
+                int progression;
+                progression = (int)(((decimal)i / (decimal)listView1.CheckedItems.Count) * 100);
+                form2.setProgress(progression);
+
             }
             Cursor.Current = Cursors.Default;
         }
