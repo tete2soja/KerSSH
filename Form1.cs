@@ -19,6 +19,13 @@ namespace KerSSH
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (pattern.Text.Equals(""))
+            {
+                MessageBox.Show("Vous devez renseigner un filtre", "Erreur",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                return;
+            }
+
             Cursor.Current = Cursors.WaitCursor;
 
             listView1.Clear();
@@ -33,15 +40,22 @@ namespace KerSSH
             foreach (var item in results)
             {
                 Ping myPing = new Ping();
-                PingReply reply = myPing.Send(item.ToString(), 100);
                 ListViewItem tmp = listView1.Items.Add(item.ToString());
-                if (reply.Status == IPStatus.Success)
+                try
                 {
-                    tmp.ForeColor = System.Drawing.Color.Green;
+                    PingReply reply = myPing.Send(item.ToString(), 100);
+                    if (reply.Status == IPStatus.Success)
+                    {
+                        tmp.ForeColor = System.Drawing.Color.Green;
+                    }
+                    else
+                    {
+                        tmp.ForeColor = System.Drawing.Color.Red;
+                    }
                 }
-                else
+                catch (PingException)
                 {
-                    tmp.ForeColor = System.Drawing.Color.Red;
+                    tmp.ForeColor = System.Drawing.Color.Gray;
                 }
             }
 
