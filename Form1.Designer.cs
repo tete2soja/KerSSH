@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.commands = new System.Windows.Forms.TextBox();
+            this.getList = new System.Windows.Forms.Button();
+            this.startScript = new System.Windows.Forms.Button();
             this.pattern = new System.Windows.Forms.TextBox();
             this.rootaccess = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,38 +39,38 @@
             this.label2 = new System.Windows.Forms.Label();
             this.password = new System.Windows.Forms.TextBox();
             this.rootpassword = new System.Windows.Forms.TextBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listPC = new System.Windows.Forms.ListView();
             this.count = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // commands
             // 
-            this.textBox1.Location = new System.Drawing.Point(212, 39);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(417, 323);
-            this.textBox1.TabIndex = 5;
+            this.commands.Location = new System.Drawing.Point(212, 39);
+            this.commands.Multiline = true;
+            this.commands.Name = "commands";
+            this.commands.Size = new System.Drawing.Size(417, 323);
+            this.commands.TabIndex = 5;
             // 
-            // button1
+            // getList
             // 
-            this.button1.Location = new System.Drawing.Point(12, 39);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(192, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Récuper la liste";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.getList.Location = new System.Drawing.Point(12, 39);
+            this.getList.Name = "getList";
+            this.getList.Size = new System.Drawing.Size(192, 23);
+            this.getList.TabIndex = 2;
+            this.getList.Text = "Récuper la liste";
+            this.getList.UseVisualStyleBackColor = true;
+            this.getList.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // startScript
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(212, 368);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(183, 44);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Lancer le script";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.startScript.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startScript.Location = new System.Drawing.Point(212, 368);
+            this.startScript.Name = "startScript";
+            this.startScript.Size = new System.Drawing.Size(183, 44);
+            this.startScript.TabIndex = 8;
+            this.startScript.Text = "Lancer le script";
+            this.startScript.UseVisualStyleBackColor = true;
+            this.startScript.Click += new System.EventHandler(this.button2_Click);
             // 
             // pattern
             // 
@@ -89,6 +89,7 @@
             this.rootaccess.TabIndex = 6;
             this.rootaccess.Text = "Root access";
             this.rootaccess.UseVisualStyleBackColor = true;
+            this.rootaccess.CheckedChanged += new System.EventHandler(this.rootaccess_CheckedChanged);
             // 
             // label1
             // 
@@ -125,22 +126,23 @@
             // 
             // rootpassword
             // 
+            this.rootpassword.Enabled = false;
             this.rootpassword.Location = new System.Drawing.Point(493, 383);
             this.rootpassword.Name = "rootpassword";
             this.rootpassword.Size = new System.Drawing.Size(136, 20);
             this.rootpassword.TabIndex = 7;
             this.rootpassword.UseSystemPasswordChar = true;
             // 
-            // listView1
+            // listPC
             // 
-            this.listView1.Location = new System.Drawing.Point(13, 68);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(191, 344);
-            this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.listView1.TabIndex = 12;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.List;
-            this.listView1.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listView1_ItemChecked);
+            this.listPC.Location = new System.Drawing.Point(13, 68);
+            this.listPC.Name = "listPC";
+            this.listPC.Size = new System.Drawing.Size(191, 344);
+            this.listPC.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.listPC.TabIndex = 12;
+            this.listPC.UseCompatibleStateImageBehavior = false;
+            this.listPC.View = System.Windows.Forms.View.List;
+            this.listPC.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listView1_ItemChecked);
             // 
             // count
             // 
@@ -156,7 +158,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(641, 425);
             this.Controls.Add(this.count);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.listPC);
             this.Controls.Add(this.rootpassword);
             this.Controls.Add(this.password);
             this.Controls.Add(this.label2);
@@ -164,11 +166,13 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.rootaccess);
             this.Controls.Add(this.pattern);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.startScript);
+            this.Controls.Add(this.getList);
+            this.Controls.Add(this.commands);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "KerSSH";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -176,9 +180,9 @@
         }
 
         #endregion
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox commands;
+        private System.Windows.Forms.Button getList;
+        private System.Windows.Forms.Button startScript;
         private System.Windows.Forms.TextBox pattern;
         private System.Windows.Forms.CheckBox rootaccess;
         private System.Windows.Forms.Label label1;
@@ -186,7 +190,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox password;
         private System.Windows.Forms.TextBox rootpassword;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listPC;
         private System.Windows.Forms.Label count;
     }
 }

@@ -59,8 +59,10 @@
             this.ClientSize = new System.Drawing.Size(522, 341);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.log);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form2";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Logs";
             this.ResumeLayout(false);
             this.PerformLayout();
