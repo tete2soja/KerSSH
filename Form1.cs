@@ -9,12 +9,12 @@ using System.Collections.ObjectModel;
 
 namespace KerSSH
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            listPC.CheckBoxes = true;
+            this.listPC.CheckBoxes = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -32,24 +32,31 @@ namespace KerSSH
 
             string domain = Domain.GetComputerDomain().Name;
             string dns = "CICNTP12";
+            // Utilisation de la commande Get-DnsServerResourceRecord pour
+            // recupérer l'ensemble des champs dans le DNS
             PowerShell powerShell = PowerShell.Create();
             string script = "(Get-DnsServerResourceRecord -ZoneName " + domain + " -RRType A -ComputerName " + dns + " | Where-Object {$_.HostName -like \"*" + pattern.Text + "*\"}).HostName";
             powerShell.AddScript(script);
             Collection<PSObject> results = powerShell.Invoke();
 
-            foreach (var item in results)
+            foreach (var entry in results)
             {
+                // Ajout de l'item dans la liste
+                ListViewItem newItem = listPC.Items.Add(entry.ToString());
+
+                // Test de connexion sur le poste
                 Ping myPing = new Ping();
-                ListViewItem newItem = listPC.Items.Add(item.ToString());
                 try
                 {
-                    PingReply reply = myPing.Send(item.ToString(), 100);
+                    PingReply reply = myPing.Send(entry.ToString(), 100);
                     if (reply.Status == IPStatus.Success)
                     {
+                        // Le poste répond correctement
                         newItem.ForeColor = System.Drawing.Color.Green;
                     }
                     else
                     {
+                        // Le poste n'est pas connecté
                         newItem.ForeColor = System.Drawing.Color.Red;
                     }
                 }
@@ -72,14 +79,15 @@ namespace KerSSH
             // Permet d'utiliser la touche "ENTREE"
             if (e.KeyValue == 13)
             {
-                getList.PerformClick();
+                this.getList.PerformClick();
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int i = 0;
-            Cursor.Current = Cursors.WaitCursor;
+            // Gestion de la progression
+            int count = 0;
+            int progression;
 
             if (listPC.CheckedItems.Count == 0)
             {
@@ -102,9 +110,10 @@ namespace KerSSH
                 return;
             }
 
+            Cursor.Current = Cursors.WaitCursor;
+
             Form2 form2 = new Form2();
             form2.Show();
-            TextBox log = form2.getTextBox();
             string user = username.Text;
             string pass = password.Text;
             // Pour chaque item choisi dans la liste
@@ -121,6 +130,7 @@ namespace KerSSH
                     StreamWriter writer = new StreamWriter(steam);
                     writer.AutoFlush = true;
 
+                    // Permet de passer le motd
                     while (steam.Length == 0)
                     {
                         System.Threading.Thread.Sleep(500);
@@ -159,12 +169,14 @@ namespace KerSSH
                         }
                     }
 
+                    // Envoie de la commande
                     writer.WriteLine(commands.Text);
                     while (steam.Length == 0)
                     {
                         System.Threading.Thread.Sleep(500);
                     }
 
+                    // Affiche le résultat de la commande
                     line = reader.ReadLine();
                     while (line != null)
                     {
@@ -196,10 +208,10 @@ namespace KerSSH
                 }
                 finally
                 {
-                    i++;
                     // Mise à jour de la barre de progression
-                    int progression;
-                    progression = (int)(((decimal)i / (decimal)listPC.CheckedItems.Count) * 100);
+                    count++;
+                    // Cast en decimal sinon pas de virgule lors de la division
+                    progression = (int)(((decimal)count / (decimal)listPC.CheckedItems.Count) * 100);
                     form2.setProgress(progression);
                 }
 
@@ -216,11 +228,11 @@ namespace KerSSH
         {
             if (rootaccess.Checked == true)
             {
-                rootpassword.Enabled = true;
+                this.rootpassword.Enabled = true;
             }
             else
             {
-                rootpassword.Enabled = false;
+                this.rootpassword.Enabled = false;
             }
         }
     }
