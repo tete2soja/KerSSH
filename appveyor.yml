@@ -24,7 +24,7 @@ artifacts:
 
 deploy:
   release: KerSSH_v$(appveyor_build_version)
-  description: 'Automatic release from AppVeyor'
+  description: 'Automatic release from AppVeyor\nSHA256 : $($(Get-FileHash -Algorithm SHA256 KerSSH.zip).Hash)\nMD5 : $($(Get-FileHash -Algorithm MD5 .\bin\release.zip).Hash)'
   provider: GitHub
   auth_token:
     secure: 7ZwM4M+GML/Gcdi8xiAIevqGDL+EF5yUM00KEh0JN7lRFP5YwU3/D/KIivo4pWId
