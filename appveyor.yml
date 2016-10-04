@@ -1,4 +1,4 @@
-version: 0.1.0.{build}
+version: 1.0.0.{build}
 
 platform: Any CPU
 
@@ -7,6 +7,23 @@ before_build:
 
 build:
   project: KerSSH.sln
+
+#---------------------------------#
+#         Deploy to GH            #
+#---------------------------------#
+
+deploy:
+  release: KerSSH_v$(appveyor_build_version)
+  description: 'Automatic release from AppVeyor'
+  provider: GitHub
+  auth_token:
+    secure: 7ZwM4M+GML/Gcdi8xiAIevqGDL+EF5yUM00KEh0JN7lRFP5YwU3/D/KIivo4pWId
+  artifact: bin\$(configuration)\            # upload all NuGet packages to release assets
+  draft: true
+  prerelease: true
+  on:
+    branch: master                 # release from master branch only
+    appveyor_repo_tag: false
 
 #---------------------------------#
 #         notifications           #
