@@ -11,6 +11,13 @@ before_build:
 build:
   project: KerSSH.sln
 
+after_build:
+  - 7z a KerSSH.zip %APPVEYOR_BUILD_FOLDER%\bin\Release\*
+
+artifacts:
+  - path: KerSSH.zip
+    name: KerSSH
+
 #---------------------------------#
 #         Deploy to GH            #
 #---------------------------------#
@@ -21,11 +28,11 @@ deploy:
   provider: GitHub
   auth_token:
     secure: 7ZwM4M+GML/Gcdi8xiAIevqGDL+EF5yUM00KEh0JN7lRFP5YwU3/D/KIivo4pWId
-  artifact: bin\Release            # upload all NuGet packages to release assets
+  artifact: KerSSH
   draft: true
   prerelease: true
   on:
-    branch: master                 # release from master branch only
+    branch: master
     appveyor_repo_tag: false
 
 #---------------------------------#
