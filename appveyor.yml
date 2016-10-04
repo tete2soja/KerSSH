@@ -2,6 +2,9 @@ version: 1.0.0.{build}
 
 platform: Any CPU
 
+configuration:
+  - Release
+
 before_build:
   - nuget restore KerSSH.sln
 
@@ -18,7 +21,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: 7ZwM4M+GML/Gcdi8xiAIevqGDL+EF5yUM00KEh0JN7lRFP5YwU3/D/KIivo4pWId
-  artifact: bin\$(configuration)\            # upload all NuGet packages to release assets
+  artifact: bin\Release            # upload all NuGet packages to release assets
   draft: true
   prerelease: true
   on:
