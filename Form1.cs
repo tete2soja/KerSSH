@@ -19,6 +19,7 @@ namespace KerSSH
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Empeche un filtre vide (renvoie l'ensemble des entrées)
             if (pattern.Text.Equals(""))
             {
                 MessageBox.Show("Vous devez renseigner un filtre", "Erreur",
@@ -27,7 +28,8 @@ namespace KerSSH
             }
 
             Cursor.Current = Cursors.WaitCursor;
-
+            
+            // Permet de forcer la suppresion du contenu de la liste
             listPC.Clear();
 
             string domain = Domain.GetComputerDomain().Name;
@@ -112,17 +114,17 @@ namespace KerSSH
 
             Cursor.Current = Cursors.WaitCursor;
 
-            Form2 form2 = new Form2();
+            LogForm form2 = new LogForm();
             form2.Show();
             string user = username.Text;
             string pass = password.Text;
             // Pour chaque item choisi dans la liste
-            foreach (ListViewItem item in listPC.CheckedItems)
+            foreach (ListViewItem pc in listPC.CheckedItems)
             {
                 try
                 {
                     // Création de la connexion SSH
-                    SshClient ssh = new SshClient(item.Text, user, pass);
+                    SshClient ssh = new SshClient(pc.Text, user, pass);
                     ssh.Connect();
                     // Création des flux du terminal
                     ShellStream steam = ssh.CreateShellStream("term", 80, 24, 800, 600, 1024);
@@ -197,7 +199,7 @@ namespace KerSSH
                 catch (System.Net.Sockets.SocketException)
                 {
                     // Connexion impossible
-                    MessageBox.Show("L'ordinateur " + item.Text + " présente un problème réseau", "Erreur de connexion",
+                    MessageBox.Show("L'ordinateur " + pc.Text + " présente un problème réseau", "Erreur de connexion",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
                 }
                 catch (InvalidOperationException)
@@ -221,11 +223,14 @@ namespace KerSSH
 
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
+            // Met à jour le compteur d'items sélectionnés
             this.count.Text = listPC.CheckedItems.Count + "/" + listPC.Items.Count;
         }
 
         private void rootaccess_CheckedChanged(object sender, EventArgs e)
         {
+            // Permet d'activer la saisie du mot de passe root seulement
+            // si nécessaire
             if (rootaccess.Checked == true)
             {
                 this.rootpassword.Enabled = true;
